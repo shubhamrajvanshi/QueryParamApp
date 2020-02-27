@@ -41,4 +41,4 @@ http.createServer(function (req, res) {
     res.writeHead(404,{'Content-Type': 'application/json'});
     res.end('404 Not found');
   }
-}).listen(8080);
+}).listen(process.env.PORT || 8080);
