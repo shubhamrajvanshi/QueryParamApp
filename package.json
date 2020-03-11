@@ -12,7 +12,8 @@
   "devDependencies": {},
   "scripts": {
     "start": "node app.js &",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "stop": "echo \"Use below id to kill the app using command 'kill -9'\" && ps aux | grep 'node app' | grep -v grep | awk '{print $2}' "
   },
   "repository": {
     "type": "git",

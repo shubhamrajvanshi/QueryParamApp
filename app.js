@@ -32,9 +32,11 @@ http.createServer(function (req, res) {
   }
   else if (checkParams(queryParams, queryObject)){
     console.log("object passed is ", queryObject);
-    res.writeHead(200, {'Content-Type': 'application/json'});
-    res.write(JSON.stringify(queryObject)+'\n');
-    res.end('Feel free to add query parameters to the end of the url');
+    var content = "#!/bin/bash \n echo 'foo'\n sleep 1";
+    res.writeHead(200, {'Content-Type': 'application/text'});
+    res.write(content);
+    res.end();
+    // res.end('Feel free to add query parameters to the end of the url');
   }
   else{
     console.log('Invalid params passed in query params ', queryObject);
