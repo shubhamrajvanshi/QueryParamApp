@@ -1,6 +1,7 @@
 const http = require('http');
 const url = require('url');
 const _ = require('lodash');
+const fs = require('fs')
 
 const queryParams = ['r','g','a','v','e'];
 
@@ -32,11 +33,22 @@ http.createServer(function (req, res) {
   }
   else if (checkParams(queryParams, queryObject)){
     console.log("object passed is ", queryObject);
-    var content = "#!/bin/bash \n echo 'foo'\n sleep 1";
-    res.writeHead(200, {'Content-Type': 'application/text'});
-    res.write(content);
-    res.end();
-    // res.end('Feel free to add query parameters to the end of the url');
+    var q = url.parse(req.url, true);
+    var filename = "." + q.pathname;
+    fs.readFile(filename, function(err, data) {
+      if (err) {
+        res.writeHead(404, {'Content-Type': 'application/json'});
+        console.log("No file found with path name:",q.pathname)
+        return res.end("404 File Not Found");
+      }
+      console.log("serving file named:",q.pathname) 
+      res.writeHead(200, {'Content-Type': 'application/text'}); 
+      res.write(data);
+      // res.writeHead(200, {'Content-Type': 'application/text'});
+      // res.write(content);
+      res.end();
+      // res.end('Feel free to add query parameters to the end of the url');
+    });
   }
   else{
     console.log('Invalid params passed in query params ', queryObject);
